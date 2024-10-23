@@ -4,15 +4,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class Util {
-    private static final String URL = "jdbc:mysql://localhost:3306/kata";
-    private static final String USER = "root";
-    private static final String PASSWORD = "1234567812";
-    private static volatile Connection connection;
 
     private static volatile StandardServiceRegistry registry;
     private static volatile SessionFactory sessionFactory;
@@ -23,17 +16,6 @@ public class Util {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    public static Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            synchronized (Util .class) {
-                if (connection == null || connection.isClosed()) {
-                    connection = DriverManager.getConnection(URL, USER, PASSWORD);
-                }
-            }
-        }
-        return connection;
     }
 
     public static SessionFactory getSessionFactory() {
